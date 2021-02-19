@@ -5,16 +5,13 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LandingPage { // Base Page in Asiya's requirements
+public class BasePage {
 
-    public LandingPage(){
+    public BasePage(){
 
         PageFactory.initElements(Driver.getDriver(), this);
-
     }
 
-    @FindBy(id= "user_count")
+    @FindBy(id="user_count")
     public WebElement userCount;
-
-
 }

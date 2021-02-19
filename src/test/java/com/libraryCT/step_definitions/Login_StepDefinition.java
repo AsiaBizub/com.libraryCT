@@ -1,6 +1,6 @@
 package com.libraryCT.step_definitions;
 
-import com.libraryCT.pages.LandingPage;
+import com.libraryCT.pages.BasePage;
 import com.libraryCT.pages.LoginPage;
 import com.libraryCT.utilities.ConfigurationReader;
 import com.libraryCT.utilities.Driver;
@@ -14,7 +14,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class Login_StepDefinition {
 
     LoginPage loginPage = new LoginPage();  // Object of the login page created
-    LandingPage landingPage = new LandingPage();
+    BasePage basePage = new BasePage();
     WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 10);
 
     @Given("I am on the login page")
@@ -94,10 +94,11 @@ public class Login_StepDefinition {
     @Then("there should be {int} user")
     public void there_should_be_user(Integer int1) {
         int expectedUserNumber = int1;
-        wait.until(ExpectedConditions.visibilityOf(landingPage.userCount));
+        wait.until(ExpectedConditions.visibilityOf(basePage.userCount));
+
 
         String expected = String.valueOf(expectedUserNumber);
-        String actual = landingPage.userCount.getText();
+        String actual = basePage.userCount.getText();
 
         Assert.assertEquals("Actual user number is not as expected!", actual, expected);
 
