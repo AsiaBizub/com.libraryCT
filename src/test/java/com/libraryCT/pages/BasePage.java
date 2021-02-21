@@ -12,6 +12,7 @@ public class BasePage {
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
+
     @FindBy(id="user_count")
     public WebElement userCount;
 }
