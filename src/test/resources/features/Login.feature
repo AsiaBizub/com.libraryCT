@@ -1,7 +1,20 @@
 Feature: Login feature
-  As a user I should be able to login with correct credentials to different accounts.
-  Dashboard should be displayed.
+  As a user I should be able to login to the library application.
+  Verify that both students and librarians can login.
   Accounts are: librarian, student
+
+  @login
+    Scenario Outline: User logs in using appropriate credentials
+    Given The user navigates to login page
+    When The user enters "<email>" and "<password>"
+    Then "<role>" on "<page>"
+    Examples:
+      | email               | password | role  | page |
+      | student98@library   | A15Oposz | stu98 | Book |
+      | student99@library   | 8tIDMH5x | stu99 | Book |
+      | student100@library  | CUcGL8fe | stu100| Book |
+      | librarian15@library | S5Ejblg1 | lib15 | Dashboard |
+
 
   @librarian
   Scenario: Login as a librarian

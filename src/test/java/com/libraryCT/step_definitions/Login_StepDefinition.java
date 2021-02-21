@@ -13,95 +13,36 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class Login_StepDefinition {
 
-    LoginPage loginPage = new LoginPage();  // Object of the login page created
-    BasePage basePage = new BasePage();
-    WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 10);
 
-    @Given("I am on the login page")
-    public void user_is_on_the_login_page(){
-        String url = ConfigurationReader.getProperty("qa2_url");
-        Driver.getDriver().get(url);
+    @Given("The user navigates to login page")
+    public void the_user_navigates_to_login_page() {
+
+        Driver.getDriver().get(ConfigurationReader.getProperty("qa2_url"));
+
     }
 
-    @When("I login as a librarian")
-    public void i_login_as_a_librarian(){
-        String username = ConfigurationReader.getProperty("lib15_user");
-        String password = ConfigurationReader.getProperty("lib15_pass");
+    @When("The user enters {string} and {string}")
+    public void the_user_enters_and(String email, String password) {
+        LoginPage loginPage = new LoginPage();
 
-        loginPage.usernameInput.sendKeys(username);
+        loginPage.usernameInput.sendKeys(email);
         loginPage.passwordInput.sendKeys(password);
         loginPage.signInButton.click();
 
     }
 
-    @Then("dashboard should be displayed")
-    public void dashboard_should_be_displayed() throws InterruptedException{
-        String expected = "dashboard";
+    @Then("{string} on {string}")  // finish the if logic for librarian
+    public void on(String role, String page) {
+       if(role.contains("student")){
+           String actualTitle = Driver.getDriver().getTitle();
+           String expectedTitle = page + actualTitle;
 
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 10);
-        wait.until(ExpectedConditions.urlContains(expected));
-        String actual = Driver.getDriver().getCurrentUrl();
-        System.out.println("actual= "+actual);
+           //Checking the context of the web element
+           Assert.assertTrue(actualTitle.contains(expectedTitle));
 
-        Assert.assertTrue(actual.contains(expected));
-
-        Driver.closeDriver();
-
+       }
     }
 
-
-    @When("I login as a student")
-    public void iLoginAsAStudent() {
-        String username = ConfigurationReader.getProperty("stu98_user");
-        String password = ConfigurationReader.getProperty("stu98_pass");
-
-        loginPage.usernameInput.sendKeys(username);
-        loginPage.passwordInput.sendKeys(password);
-        loginPage.signInButton.click();
-    }
-
-    @Then("books should be displayed")
-    public void booksShouldBeDisplayed() {
-        String expected = "books";
-
-        WebDriverWait wait = new WebDriverWait(Driver.getDriver(), 10);
-        wait.until(ExpectedConditions.urlContains(expected));
-        String actual = Driver.getDriver().getCurrentUrl();
-        System.out.println("actual= "+actual);
-
-        Assert.assertTrue(actual.contains(expected));
-
-        Driver.closeDriver();
-    }
-
-    @When("I enter username {string}")
-    public void i_enter_username(String string1) {
-        String username = string1;
-        loginPage.usernameInput.sendKeys(username);
-    }
-
-    @When("I enter password {string}")
-    public void i_enter_password(String string2) {
-        String password = string2;
-        loginPage.passwordInput.sendKeys(password);
-
-    }
-    @When("click the sign in button")
-    public void click_the_sign_in_button() {
-        loginPage.signInButton.click();
-
-    }
-    @Then("there should be {int} user")
-    public void there_should_be_user(Integer int1) {
-        int expectedUserNumber = int1;
-        wait.until(ExpectedConditions.visibilityOf(basePage.userCount));
-
-
-        String expected = String.valueOf(expectedUserNumber);
-        String actual = basePage.userCount.getText();
-
-        Assert.assertEquals("Actual user number is not as expected!", actual, expected);
-
-    }
 
 }
+
