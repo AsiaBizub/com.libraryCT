@@ -3,7 +3,7 @@ Feature: Login feature
   Verify that both students and librarians can login.
   Accounts are: librarian, student
 
-  @login
+  @login @Gunel
     Scenario Outline: User logs in using appropriate credentials
     Given The user navigates to login page
     When The user enters "<email>" and "<password>"
