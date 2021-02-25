@@ -15,8 +15,6 @@ public abstract class BasePage {
         PageFactory.initElements(Driver.getDriver(), this);
     }
 
-
-
     public void logOut (){ //Work In Progress
 
         BrowserUtils.sleep(3);
@@ -25,5 +23,6 @@ public abstract class BasePage {
 
     @FindBy(id="user_count")
     public WebElement userCount;
+
 }
 
